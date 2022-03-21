@@ -19,6 +19,8 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
+
+@Data
 public class User {
 
     /**
