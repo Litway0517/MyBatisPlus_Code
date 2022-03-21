@@ -10,7 +10,7 @@ import lombok.*;
  */
 
 // NoArgsConstructor注解用于简化实体类开发. 实体类虽然没有无参构造, 但是编译之后class文件中会有
-@NoArgsConstructor
+//@NoArgsConstructor
 
 // AllArgsConstructor注解用来添加所有参数构造
 @AllArgsConstructor
@@ -20,6 +20,11 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 
+/*
+    @Data注解会生成 无参构造\getter\setter\hashCode\toString方法. 注意没有有参构造
+    @Data注解和@AllArgsConstructor注解一起使用时, 会生成全参数构造方法\getter\setter\hashCode\toString
+        但是不会有无参构造, 无参构造是默认的
+ */
 @Data
 public class User {
 
