@@ -10,7 +10,7 @@ import lombok.*;
  */
 
 // NoArgsConstructor注解用于简化实体类开发. 实体类虽然没有无参构造, 但是编译之后class文件中会有
-//@NoArgsConstructor
+@NoArgsConstructor
 
 // AllArgsConstructor注解用来添加所有参数构造
 @AllArgsConstructor
