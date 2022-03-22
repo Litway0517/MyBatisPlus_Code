@@ -35,7 +35,7 @@ public class User {
     /**
      * 用户名
      */
-    private String username;
+    private String name;
     /**
      * 年龄
      */
