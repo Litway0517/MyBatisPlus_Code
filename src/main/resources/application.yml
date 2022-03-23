@@ -13,7 +13,7 @@ spring:
 mybatis-plus:
   configuration:
     # 配置日志输出功能 -> StdOutImpl是框架自带的
-    log-impl: org.apache.ibatis.logging.stdOut.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 
