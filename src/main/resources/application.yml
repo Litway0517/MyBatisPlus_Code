@@ -9,6 +9,13 @@ spring:
     username: root
     password: root
 
+# 配置 MyBatisPlus 相关文件
+mybatis-plus:
+  configuration:
+    # 配置日志输出功能 -> StdOutImpl是框架自带的
+    log-impl: org.apache.ibatis.logging.stdOut.StdOutImpl
+
+
 
 
 
