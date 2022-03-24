@@ -9,6 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+/**
+ * Mybatis +测试
+ *
+ * @author DELL_
+ * @date 2022/03/24
+ */
 @SpringBootTest
 public class MyBatisPlusTest {
 
