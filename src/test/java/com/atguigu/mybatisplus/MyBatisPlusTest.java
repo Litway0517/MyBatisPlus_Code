@@ -24,6 +24,30 @@ public class MyBatisPlusTest {
     private UserMapper userMapper;
 
     @Test
+    // 查询
+    public void testSelect() {
+        // 根据id查询 -> SELECT id,name,age,email FROM user WHERE id=?
+        User user = userMapper.selectById(1L);
+        System.out.println("根据id查询 -> " + user);
+
+        // 根据ids批量查询 -> SELECT id,name,age,email FROM user WHERE id IN ( ? , ? , ? )
+        List<Long> longs = Arrays.asList(1L, 2L, 3L);
+        List<User> users = userMapper.selectBatchIds(longs);
+        users.forEach(System.out::println);
+
+        // 根据map集合中的条件来查询 SQL -> SELECT id,name,age,email FROM user WHERE name = ? AND age = ?
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("name", "Jack");
+        map.put("age", "20");
+        List<User> users1 = userMapper.selectByMap(map);
+        users1.forEach(System.out::println);
+
+        // 查询所有
+        List<User> users2 = userMapper.selectList(null);
+        users2.forEach(System.out::println);
+    }
+
+    @Test
     // 修改方法
     public void testUpdate() {
         // SQL -> UPDATE user SET name=?, email=? WHERE id=?
