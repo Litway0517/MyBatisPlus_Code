@@ -7,10 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
- * Mybatis +测试
+ * MybatisPlus测试
  *
  * @author DELL_
  * @date 2022/03/24
@@ -20,6 +22,28 @@ public class MyBatisPlusTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Test
+    // 测试删除
+    public void testDelete() {
+        // SQL -> DELETE FROM user WHERE id=?
+        int i = userMapper.deleteById(1507301491378589697L);
+        System.out.println(i);
+
+        // 通过Map集合删除. SQL -> DELETE FROM user WHERE name = ? AND age = ?
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        // 存放删除的条件. 字段名 - 字段值
+        map.put("name", "lit");
+        map.put("age", "100");
+        int i1 = userMapper.deleteByMap(map);
+        System.out.println("result -> " + i1);
+
+        // 通过集合删除. SQL ->
+        List<Long> longs = Arrays.asList(34L, 234L, 2443L);
+        int i2 = userMapper.deleteBatchIds(longs);
+        System.out.println("result -> " + i2);
+
+    }
 
     @Test
     public void testSelectList() {
