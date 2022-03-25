@@ -24,6 +24,18 @@ public class MyBatisPlusTest {
     private UserMapper userMapper;
 
     @Test
+    // 修改方法
+    public void testUpdate() {
+        // SQL -> UPDATE user SET name=?, email=? WHERE id=?
+        User user = new User();
+        user.setId(1507344259685613569L);
+        user.setName("lit");
+        user.setEmail("test@163.com");
+        int i = userMapper.updateById(user);
+        System.out.println("result -> " + i);
+    }
+
+    @Test
     // 测试删除
     public void testDelete() {
         // SQL -> DELETE FROM user WHERE id=?
@@ -38,7 +50,8 @@ public class MyBatisPlusTest {
         int i1 = userMapper.deleteByMap(map);
         System.out.println("result -> " + i1);
 
-        // 通过集合删除. SQL ->
+        // 通过集合删除. SQL -> DELETE FROM user WHERE id IN ( ? , ? , ? )
+        // Arrays.asList方法能够将传过来的参数形成一个集合
         List<Long> longs = Arrays.asList(34L, 234L, 2443L);
         int i2 = userMapper.deleteBatchIds(longs);
         System.out.println("result -> " + i2);
