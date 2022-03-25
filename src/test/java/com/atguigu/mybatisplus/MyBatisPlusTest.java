@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * MybatisPlus测试
@@ -22,6 +23,14 @@ public class MyBatisPlusTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Test
+    // 测试自定义的查询方法
+    public void testSelectBySelf() {
+        // 最重要的是要说明, MyBatisPlus框架只做增强不做修改. 所以开发人员仍然能够自己写接口并编写映射文件
+        Map<String, Object> userById = userMapper.getUserById(1L);
+        System.out.println("自定义的mapper方法 -> " + userById);
+    }
 
     @Test
     // 查询
