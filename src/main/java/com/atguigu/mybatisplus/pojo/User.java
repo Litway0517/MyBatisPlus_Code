@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -43,9 +44,10 @@ public class User {
         将id属性对应的字段作为SQL的主键
         参数:
             - value: 用于主动映射实体类的成员变量名称和数据库表字段的名称. 如果一样就可以不写
-                使用注解的话, 如果只有一个参数值, 那么默认就是给value参数赋值的. 
+                使用注解的话, 如果只有一个参数值, 那么默认就是给value参数赋值的.
+            - type: 用来设置表中的主键字段的递增方式, 有自增 雪花算法 手动输入 等几种方式
      */
-    @TableId(value = "uid")
+    @TableId(value = "uid", type = IdType.AUTO)
     private Long uid;
     /**
      * 用户名
