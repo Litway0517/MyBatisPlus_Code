@@ -39,8 +39,13 @@ public class User {
     /**
      * id
      */
-    // 将id属性对应的字段作为SQL的主键
-    @TableId
+    /*
+        将id属性对应的字段作为SQL的主键
+        参数:
+            - value: 用于主动映射实体类的成员变量名称和数据库表字段的名称. 如果一样就可以不写
+                使用注解的话, 如果只有一个参数值, 那么默认就是给value参数赋值的. 
+     */
+    @TableId(value = "uid")
     private Long uid;
     /**
      * 用户名
