@@ -61,7 +61,7 @@ public class MyBatisPlusTest {
     public void testUpdate() {
         // SQL -> UPDATE user SET name=?, email=? WHERE id=?
         User user = new User();
-        user.setId(1507344259685613569L);
+        user.setUid(1507344259685613569L);
         user.setName("lit");
         user.setEmail("test@163.com");
         int i = userMapper.updateById(user);
@@ -108,7 +108,7 @@ public class MyBatisPlusTest {
         user.setEmail("lit@163.com");
         int insert = userMapper.insert(user);
         System.out.println("result: " + insert);
-        System.out.println("打印插入该条数据后得到的主键(这里使用的是雪花算法生成的id, 并不是表中的id): " + user.getId());
+        System.out.println("打印插入该条数据后得到的主键(这里使用的是雪花算法生成的id, 并不是表中的id): " + user.getUid());
     }
 
 }

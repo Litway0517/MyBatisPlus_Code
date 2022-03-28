@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
@@ -38,7 +39,9 @@ public class User {
     /**
      * id
      */
-    private Long id;
+    // 将id属性对应的字段作为SQL的主键
+    @TableId
+    private Long uid;
     /**
      * 用户名
      */
