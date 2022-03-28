@@ -25,7 +25,7 @@ public class UserServiceImplTest {
     @Test
     public void testBatchInsert() {
         ArrayList<User> userArrayList = new ArrayList<User>();
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 21; i <= 30; i++) {
             User user = new User();
             user.setName("lit" + i);
             user.setAge(20 + i);
