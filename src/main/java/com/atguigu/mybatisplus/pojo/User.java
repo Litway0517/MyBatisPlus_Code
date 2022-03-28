@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 /**
@@ -26,6 +27,12 @@ import lombok.*;
         但是不会有无参构造, 无参构造是默认的
  */
 @Data
+
+/*
+    TableName("xx")注解用于手动映射表名.
+    因为在使用通用mappers|通用Service时传入的就是User对象, 框架会认为表就叫做user. 现在表名改成了t_user, 所以进行手动映射.
+ */
+@TableName("t_user")
 public class User {
 
     /**
