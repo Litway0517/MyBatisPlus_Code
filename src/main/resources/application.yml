@@ -14,6 +14,11 @@ mybatis-plus:
   configuration:
     # 配置日志输出功能 -> StdOutImpl是框架自带的
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 配置MyBatis-Plus的全局设置
+  global-config:
+    db-config:
+      # 设置所有表名对应的前缀
+      table-prefix: t_
 
 
 
