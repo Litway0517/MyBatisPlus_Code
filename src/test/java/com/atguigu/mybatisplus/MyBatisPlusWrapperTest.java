@@ -15,10 +15,20 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
-    // 待条件查询
+    // 带条件删除
+    @Test
+    public void testDeleteWrapper() {
+        // 条件 -> 删除邮箱为null的用户信息
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
+        userQueryWrapper.isNull("email");
+        int delete = userMapper.delete(userQueryWrapper);
+        System.out.println("影响行数 -> " + delete);
+    }
+
+    // 带条件查询
     @Test
     public void testQueryWrapper() {
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         /*
             条件 -> 查询结果按照年龄降序排序, 年龄相同按照id
 
