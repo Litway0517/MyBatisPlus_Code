@@ -3,6 +3,8 @@ package com.atguigu.mybatisplus;
 
 import com.atguigu.mybatisplus.mapper.UserMapper;
 import com.atguigu.mybatisplus.pojo.User;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +25,13 @@ public class MyBatisPlusTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Test
+    public void testWrapper() {
+        // 了解Wrapper的继承体系
+        QueryWrapper<User> userWrapper = new QueryWrapper<User>();
+        userMapper.selectList(userWrapper);
+    }
 
     @Test
     // 测试自定义的查询方法
