@@ -62,7 +62,7 @@ public class MyBatisPlusTest {
         // SQL -> UPDATE user SET name=?, email=? WHERE id=?
         User user = new User();
         user.setUid(1507344259685613569L);
-        user.setName("lit");
+        user.setUserName("lit");
         user.setEmail("test@163.com");
         int i = userMapper.updateById(user);
         System.out.println("result -> " + i);
@@ -105,7 +105,7 @@ public class MyBatisPlusTest {
         User user = new User();
         // MybatisPlus默认使用雪花算法生成主键id, 但是如果手动设置id值的话就不会再生成了
         // user.setUid(100L);
-        user.setName("lit");
+        user.setUserName("lit");
         user.setAge(92);
         user.setEmail("lit@163.com");
         int insert = userMapper.insert(user);
