@@ -15,6 +15,27 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
+    // 更新动作 -> 通过QueryWrapper来实现更新.
+    @Test
+    public void testUpdate() {
+        // 将（年龄大于20并且用户名中包含有和）或邮箱为nuLl的用户信息修改
+        /*
+            通过QueryWrapper来实现更新. 从QueryWrapper中查询符合条件的数据, 然后使用entity进行更新
+                - entity用来设置新的数据.
+                - QueryWrapper用来设置查询条件
+         */
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
+        userQueryWrapper.gt("age", 20)
+                .like("user_name", "a")
+                .or()
+                .isNull("email");
+        User user = new User();
+        user.setName("小明");
+        user.setEmail("小明@atguigu.com");
+        int update = userMapper.update(user, userQueryWrapper);
+        System.out.println("影响行数 -> " + update);
+    }
+
     // 带条件删除
     @Test
     public void testDeleteWrapper() {
