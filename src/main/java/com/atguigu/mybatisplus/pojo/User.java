@@ -47,6 +47,7 @@ public class User {
                 使用注解的话, 如果只有一个参数值, 那么默认就是给value参数赋值的.
             - type: 用来设置表中的主键字段的递增方式, 有自增 雪花算法 手动输入 等几种方式
      */
+//    @TableId(value = "uid")
     @TableId(value = "uid", type = IdType.AUTO)
     private Long uid;
     /**
