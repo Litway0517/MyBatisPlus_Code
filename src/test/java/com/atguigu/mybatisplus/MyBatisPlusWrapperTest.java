@@ -15,6 +15,24 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
+    // 待条件查询
+    @Test
+    public void testQueryWrapper() {
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        /*
+            条件 -> 查询结果按照年龄降序排序, 年龄相同按照id
+
+            SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0
+                    ORDER BY age DESC,uid ASC
+         */
+        userQueryWrapper.orderByDesc("age")
+                .orderByAsc("uid");
+        List<User> list = userMapper.selectList(userQueryWrapper);
+        list.forEach(System.out::println);
+    }
+
+
+    // 带条件的查询
     @Test
     public void testWrapper() {
         // 创建条件构造器
@@ -23,6 +41,10 @@ public class MyBatisPlusWrapperTest {
             设置条件 -> 查询用户名包含a, 年龄在20-30之间, 邮箱信息不为null的用户信息
             链式编程, 因为每一个条件返回的都是QueryWrapper, 所以还是能够调用其他方法设置条件
             - column: 是数据库表的字段名称, 而不是实体类的属性名
+
+            SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0
+                    AND (user_name LIKE ? AND age BETWEEN ? AND ? AND email IS NOT NULL)
+                    ==> Parameters: %a%(String), 20(Integer), 30(Integer)
          */
         userQueryWrapper
                 .like("user_name", "a")
