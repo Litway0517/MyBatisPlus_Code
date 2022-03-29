@@ -1,6 +1,7 @@
 package com.atguigu.mybatisplus.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -53,6 +54,8 @@ public class User {
     /**
      * 用户名
      */
+    // TableField注解和TableId注解差不多, 只不过TableId是用来映射表中主键字段与成员变量的关系的
+    @TableField("user_name")
     private String userName;
     /**
      * 年龄
