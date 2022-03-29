@@ -103,6 +103,8 @@ public class MyBatisPlusTest {
     public void testInsert() {
         // SQL -> INSERT INTO user ( id, name, age, email ) VALUES ( ?, ?, ?, ? )
         User user = new User();
+        // MybatisPlus默认使用雪花算法生成主键id, 但是如果手动设置id值的话就不会再生成了
+        // user.setUid(100L);
         user.setName("lit");
         user.setAge(92);
         user.setEmail("lit@163.com");
