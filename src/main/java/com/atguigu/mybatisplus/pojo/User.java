@@ -53,7 +53,7 @@ public class User {
      */
     // TableField注解和TableId注解差不多, 只不过TableId是用来映射表中主键字段与成员变量的关系的
     @TableField("user_name")
-    private String userName;
+    private String name;
     /**
      * 年龄
      */
