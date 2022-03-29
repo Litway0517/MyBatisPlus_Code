@@ -19,6 +19,8 @@ mybatis-plus:
     db-config:
       # 设置所有表名对应的前缀
       table-prefix: t_
+      # 设置统一的主键生成策略, 避免在每个类上都加上TableId注解. 如果是NONE, 那么插入数据之后不会将id返回给实体对象
+      id-type: AUTO
 
 
 
