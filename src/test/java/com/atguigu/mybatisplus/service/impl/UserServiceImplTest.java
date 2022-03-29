@@ -27,7 +27,7 @@ public class UserServiceImplTest {
         ArrayList<User> userArrayList = new ArrayList<User>();
         for (int i = 51; i <= 60; i++) {
             User user = new User();
-            user.setUserName("lit" + i);
+            user.setName("lit" + i);
             user.setAge(20 + i);
             user.setEmail("lit" + i + "@163.com");
             userArrayList.add(user);

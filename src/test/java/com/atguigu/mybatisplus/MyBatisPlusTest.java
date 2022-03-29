@@ -62,7 +62,7 @@ public class MyBatisPlusTest {
         // SQL -> UPDATE user SET name=?, email=? WHERE id=?
         User user = new User();
         user.setUid(1507344259685613569L);
-        user.setUserName("lit");
+        user.setName("lit");
         user.setEmail("test@163.com");
         int i = userMapper.updateById(user);
         System.out.println("result -> " + i);
@@ -85,7 +85,7 @@ public class MyBatisPlusTest {
 
         // 通过集合删除. SQL -> DELETE FROM user WHERE id IN ( ? , ? , ? )
         // Arrays.asList方法能够将传过来的参数形成一个集合
-        List<Long> longs = Arrays.asList(34L, 234L, 2443L);
+        List<Long> longs = Arrays.asList(1L, 2L, 3L);
         int i2 = userMapper.deleteBatchIds(longs);
         System.out.println("result -> " + i2);
 
@@ -105,7 +105,7 @@ public class MyBatisPlusTest {
         User user = new User();
         // MybatisPlus默认使用雪花算法生成主键id, 但是如果手动设置id值的话就不会再生成了
         // user.setUid(100L);
-        user.setUserName("lit");
+        user.setName("lit");
         user.setAge(92);
         user.setEmail("lit@163.com");
         int insert = userMapper.insert(user);
