@@ -19,6 +19,11 @@ public class MyBatisPlusWrapperTest {
     // 子查询实例
     @Test
     public void testUpdateWrapper() {
+        /*
+            SQL ->
+                SELECT uid,user_name AS name,age,email,is_deleted FROM t_user
+                WHERE is_deleted=0 AND (uid IN (select uid from t_user where is_deleted = 0 and uid <= 100))
+         */
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         userQueryWrapper.inSql("uid",
                 "select uid from t_user where is_deleted = 0 and uid <= 100");
