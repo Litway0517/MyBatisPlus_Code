@@ -15,13 +15,37 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
+    // 更新东座
+    @Test
+    public void testUpdate2() {
+        // 将用户名中包含有a并且(年龄大于20或邮箱为null)的用户信息修改
+        /*
+            and()方法|or()方法中的lambda表达式会优先执行
+
+            下面的and方法中的i就是QueryWrapper<User>类型的e对象
+            SQL引擎: 会优先执行加上小括号的SQL片段
+            UPDATE t_user SET user_name=?, email=? WHERE is_deleted=0 AND (user_name LIKE ? AND (age > ? OR email IS NULL))
+            ==> Parameters: 小红(String), test@atguigu.com(String), %a%(String), 20(Integer)
+         */
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
+        userQueryWrapper
+                .like("user_name", "a")
+                .and(i -> i.gt("age", 20).or().isNull("email"));
+        User user = new User();
+        user.setName("小红");
+        user.setEmail("test@atguigu.com");
+        int update = userMapper.update(user, userQueryWrapper);
+        System.out.println("影响行数 -> " + update);
+
+    }
+
     // 更新动作 -> 通过QueryWrapper来实现更新.
     @Test
     public void testUpdate() {
-        // 将（年龄大于20并且用户名中包含有和）或邮箱为nuLl的用户信息修改
+        // 将(年龄大于20并且用户名中包含有和)或邮箱为null的用户信息修改
         /*
             通过QueryWrapper来实现更新. 从QueryWrapper中查询符合条件的数据, 然后使用entity进行更新
-                - entity用来设置新的数据.
+                - entity用来设置新的数据
                 - QueryWrapper用来设置查询条件
          */
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
