@@ -8,12 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 public class MyBatisPlusWrapperTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    // 查询部分信息, 使用Map进行保存
+    @Test
+    public void testSelectByMap() {
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
+        userQueryWrapper.select("user_name as name", "age", "email");
+        List<Map<String, Object>> list = userMapper.selectMaps(userQueryWrapper);
+        list.forEach(System.out::println);
+    }
 
     // 更新东座
     @Test
@@ -42,11 +52,14 @@ public class MyBatisPlusWrapperTest {
     // 更新动作 -> 通过QueryWrapper来实现更新.
     @Test
     public void testUpdate() {
-        // 将(年龄大于20并且用户名中包含有和)或邮箱为null的用户信息修改
+        // 将(年龄大于20并且用户名中包含有a)或邮箱为null的用户信息修改
         /*
             通过QueryWrapper来实现更新. 从QueryWrapper中查询符合条件的数据, 然后使用entity进行更新
                 - entity用来设置新的数据
                 - QueryWrapper用来设置查询条件
+
+            UPDATE t_user SET user_name=?, email=? WHERE is_deleted=0 AND (age > ? AND user_name LIKE ? OR email IS NULL)
+            ==> Parameters: 小明(String), 小明@atguigu.com(String), 20(Integer), %a%(String)
          */
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         userQueryWrapper.gt("age", 20)
