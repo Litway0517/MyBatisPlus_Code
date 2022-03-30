@@ -16,6 +16,16 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
+    // 子查询实例
+    @Test
+    public void testUpdateWrapper() {
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
+        userQueryWrapper.inSql("uid",
+                "select uid from t_user where is_deleted = 0 and uid <= 100");
+        List<User> users = userMapper.selectList(userQueryWrapper);
+        users.forEach(System.out::println);
+    }
+
     // 查询部分信息, 使用Map进行保存
     @Test
     public void testSelectByMap() {
@@ -25,14 +35,14 @@ public class MyBatisPlusWrapperTest {
         list.forEach(System.out::println);
     }
 
-    // 更新东座
+    // 更新动作
     @Test
     public void testUpdate2() {
         // 将用户名中包含有a并且(年龄大于20或邮箱为null)的用户信息修改
         /*
             and()方法|or()方法中的lambda表达式会优先执行
 
-            下面的and方法中的i就是QueryWrapper<User>类型的e对象
+            下面的and方法中的i就是QueryWrapper<User>类型的对象
             SQL引擎: 会优先执行加上小括号的SQL片段
             UPDATE t_user SET user_name=?, email=? WHERE is_deleted=0 AND (user_name LIKE ? AND (age > ? OR email IS NULL))
             ==> Parameters: 小红(String), test@atguigu.com(String), %a%(String), 20(Integer)
