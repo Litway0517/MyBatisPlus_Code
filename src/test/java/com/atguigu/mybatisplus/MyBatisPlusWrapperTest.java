@@ -4,6 +4,7 @@ import com.atguigu.mybatisplus.mapper.UserMapper;
 import com.atguigu.mybatisplus.pojo.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,28 @@ public class MyBatisPlusWrapperTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    // 带条件的查询
+    @Test
+    public void testSelectByCondition() {
+        // 年龄 20-30
+        String username = "";
+        Integer ageMin = 20;
+        Integer ageMax = 30;
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
+        if (StringUtils.isNotBlank(username)) {
+            userQueryWrapper.like("user_name", username);
+        }
+        // 简单判断
+        if (ageMin != null) {
+            userQueryWrapper.gt("age", ageMin);
+        }
+        if (ageMax != null) {
+            userQueryWrapper.lt("age", ageMax);
+        }
+        List<User> users = userMapper.selectList(userQueryWrapper);
+        users.forEach(System.out::println);
+    }
 
     // 通过updateWrapper进行修改
     @Test
