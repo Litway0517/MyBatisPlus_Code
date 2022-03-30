@@ -3,6 +3,7 @@ package com.atguigu.mybatisplus;
 import com.atguigu.mybatisplus.mapper.UserMapper;
 import com.atguigu.mybatisplus.pojo.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,9 +17,27 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
-    // 子查询实例
+    // 通过updateWrapper进行修改
     @Test
     public void testUpdateWrapper() {
+        // 将用户名中包含有a并且(年龄大于20或邮箱为null)的用户信息修改
+        /*
+            SQL -> UPDATE t_user SET user_name=?,email=? WHERE is_deleted=0
+                AND (user_name LIKE ? AND (age > ? OR email IS NULL))
+         */
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<User>();
+        userUpdateWrapper.like("user_name", "a")
+                .and(i -> i.gt("age", 20).or().isNull("email"));
+        userUpdateWrapper.set("user_name", "小蓝");
+        userUpdateWrapper.set("email", "abc@atguigu.com");
+
+        // 使用得是updateWrapper所以不传入实体类
+        userMapper.update(null, userUpdateWrapper);
+    }
+
+    // 子查询实例
+    @Test
+    public void testQueryWrapper2() {
         /*
             SQL ->
                 SELECT uid,user_name AS name,age,email,is_deleted FROM t_user
