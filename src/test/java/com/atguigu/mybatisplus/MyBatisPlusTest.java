@@ -114,9 +114,9 @@ public class MyBatisPlusTest {
         User user = new User();
         // MybatisPlus默认使用雪花算法生成主键id, 但是如果手动设置id值的话就不会再生成了
         // user.setUid(100L);
-        user.setName("lit");
-        user.setAge(92);
-        user.setEmail("lit@163.com");
+        user.setName("张三");
+        user.setAge(21);
+        user.setEmail("zhangsan@163.com");
         int insert = userMapper.insert(user);
         System.out.println("result: " + insert);
         System.out.println("打印插入该条数据后得到的主键(这里使用的是雪花算法生成的id, 并不是表中的id): " + user.getUid());
