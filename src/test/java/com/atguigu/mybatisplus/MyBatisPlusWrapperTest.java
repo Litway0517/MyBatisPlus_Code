@@ -2,6 +2,7 @@ package com.atguigu.mybatisplus;
 
 import com.atguigu.mybatisplus.mapper.UserMapper;
 import com.atguigu.mybatisplus.pojo.User;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -17,6 +18,25 @@ public class MyBatisPlusWrapperTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    // 使用lambda查询器 -> lambda的出现是为了避免将数据库表的字段名写错 是通过访问实体类所对应的字段名实现的
+    @Test
+    public void testLambdaQueryWrapper() {
+        // 条件: 名称中包含b字母,  年龄 20-30
+        /*
+            SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0
+            AND (user_name LIKE ? AND age > ? AND age < ?)
+         */
+        String username = "b";
+        Integer ageMin = 20;
+        Integer ageMax = 30;
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<User>();
+        userLambdaQueryWrapper.like(StringUtils.isNotBlank(username), User::getName, username)
+                .gt(ageMin != null, User::getAge, ageMin)
+                .lt(ageMax != null, User::getAge, ageMax);
+        List<User> users = userMapper.selectList(userLambdaQueryWrapper);
+        users.forEach(System.out::println);
+    }
 
     // 带条件的查询 -> 简洁
     @Test
