@@ -18,15 +18,35 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
-    // 带条件的查询
+    // 带条件的查询 -> 简洁
     @Test
-    public void testSelectByCondition() {
-        // 条件: 年龄 20-30
+    public void testSelectByCondition2() {
+        // 条件: 名称中包含b字母,  年龄 20-30
         /*
             SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0
                     AND (user_name LIKE ? AND age > ? AND age < ?)
          */
-        String username = "a";
+        String username = "b";
+        Integer ageMin = 20;
+        Integer ageMax = 30;
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
+        // like()方法第一个参数为boolean, 如果这个条件表达式为真, 那么就拼接该SQL片段, 从而简化if判断
+        userQueryWrapper.like(StringUtils.isNotBlank(username), "user_name", username)
+                .gt(ageMin != null, "age", ageMin)
+                .lt(ageMax != null, "age", ageMax);
+        List<User> users = userMapper.selectList(userQueryWrapper);
+        users.forEach(System.out::println);
+    }
+
+    // 带条件的查询
+    @Test
+    public void testSelectByCondition() {
+        // 条件: 名称中包含b字母,  年龄 20-30
+        /*
+            SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0
+                    AND (user_name LIKE ? AND age > ? AND age < ?)
+         */
+        String username = "b";
         Integer ageMin = 20;
         Integer ageMax = 30;
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
