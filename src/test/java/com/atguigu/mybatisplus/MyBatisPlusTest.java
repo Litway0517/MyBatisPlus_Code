@@ -33,16 +33,16 @@ public class MyBatisPlusTest {
         userMapper.selectList(userWrapper);
     }
 
-    @Test
     // 测试自定义的查询方法
+    @Test
     public void testSelectBySelf() {
         // 最重要的是要说明, MyBatisPlus框架只做增强不做修改. 所以开发人员仍然能够自己写接口并编写映射文件
         Map<String, Object> userById = userMapper.getUserById(1L);
         System.out.println("自定义的mapper方法 -> " + userById);
     }
 
+    // 根据id查询. 根据ids批量查询. 传入Map<表的字段, 值>参数查询.
     @Test
-    // 查询
     public void testSelect() {
         // 根据id查询 -> SELECT id,name,age,email FROM user WHERE id=?
         User user = userMapper.selectById(1L);
@@ -100,6 +100,7 @@ public class MyBatisPlusTest {
 
     }
 
+    // 查询所有数据
     @Test
     public void testSelectList() {
         // Wrapper是条件构造器
