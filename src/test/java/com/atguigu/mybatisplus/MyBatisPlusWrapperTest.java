@@ -21,8 +21,12 @@ public class MyBatisPlusWrapperTest {
     // 带条件的查询
     @Test
     public void testSelectByCondition() {
-        // 年龄 20-30
-        String username = "";
+        // 条件: 年龄 20-30
+        /*
+            SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0
+                    AND (user_name LIKE ? AND age > ? AND age < ?)
+         */
+        String username = "a";
         Integer ageMin = 20;
         Integer ageMax = 30;
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
