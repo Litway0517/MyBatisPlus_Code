@@ -60,7 +60,7 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 带条件的查询 -> 简洁
+    // 通过QueryWrapper 带条件的查询 -> 简洁 使用新的方法. 当条件为真时才会拼接SQL
     @Test
     public void testSelectByCondition2() {
         // 条件: 名称中包含b字母,  年龄 20-30
@@ -80,7 +80,7 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 带条件的查询
+    // 通过QueryWrapper 带条件的查询
     @Test
     public void testSelectByCondition() {
         // 条件: 名称中包含b字母,  年龄 20-30
@@ -106,9 +106,9 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 通过updateWrapper进行修改
+    // 通过UpdateWrapper 更新操作
     @Test
-    public void testUpdateWrapper() {
+    public void testUpdateByUpdateWrapper() {
         // 将用户名中包含有a并且(年龄大于20或邮箱为null)的用户信息修改
         /*
             SQL -> UPDATE t_user SET user_name=?,email=? WHERE is_deleted=0
@@ -124,7 +124,7 @@ public class MyBatisPlusWrapperTest {
         userMapper.update(null, userUpdateWrapper);
     }
 
-    // 子查询实例
+    // 通过QueryWrapper 子查询实例 inSql方法
     @Test
     public void testQueryWrapper2() {
         /*
@@ -139,7 +139,7 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 查询部分信息, 使用Map进行保存
+    // 通过QueryWrapper 查询部分信息, 使用Map进行保存
     @Test
     public void testSelectByMap() {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
@@ -148,7 +148,7 @@ public class MyBatisPlusWrapperTest {
         list.forEach(System.out::println);
     }
 
-    // 更新动作
+    // 通过QueryWrapper 更新动作 -> 条件更换了
     @Test
     public void testUpdate2() {
         // 将用户名中包含有a并且(年龄大于20或邮箱为null)的用户信息修改
@@ -163,6 +163,7 @@ public class MyBatisPlusWrapperTest {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         userQueryWrapper
                 .like("user_name", "a")
+                // 在and方法里面使用lambda, i参数实际上就是消费者接口的泛型
                 .and(i -> i.gt("age", 20).or().isNull("email"));
         User user = new User();
         user.setName("小红");
@@ -172,7 +173,7 @@ public class MyBatisPlusWrapperTest {
 
     }
 
-    // 更新动作 -> 通过QueryWrapper来实现更新.
+    // 通过QueryWrapper 更新动作 -> 通过QueryWrapper来实现更新.
     @Test
     public void testUpdate() {
         // 将(年龄大于20并且用户名中包含有a)或邮箱为null的用户信息修改
@@ -196,9 +197,9 @@ public class MyBatisPlusWrapperTest {
         System.out.println("影响行数 -> " + update);
     }
 
-    // 带条件删除
+    // 通过QueryWrapper 带条件删除
     @Test
-    public void testDeleteWrapper() {
+    public void testDelete() {
         // 条件 -> 删除邮箱为null的用户信息
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         userQueryWrapper.isNull("email");
@@ -206,9 +207,9 @@ public class MyBatisPlusWrapperTest {
         System.out.println("影响行数 -> " + delete);
     }
 
-    // 带条件查询
+    // 通过QueryWrapper 带条件查询
     @Test
-    public void testQueryWrapper() {
+    public void testQuery2() {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         /*
             条件 -> 查询结果按照年龄降序排序, 年龄相同按照id
@@ -223,9 +224,9 @@ public class MyBatisPlusWrapperTest {
     }
 
 
-    // 带条件的查询
+    // 通过QueryWrapper 带条件的查询
     @Test
-    public void testWrapper() {
+    public void testQuery() {
         // 创建条件构造器
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         /*
