@@ -42,7 +42,15 @@ class MyBatisPlusPluginsTest {
 
         // 小王将价格 -30
         productWang.setPrice(productWang.getPrice() - 30);
-        productMapper.updateById(productWang);
+        int i = productMapper.updateById(productWang);
+        if (i == 0) {
+            // 说明修改价格失败, 重试
+            // 一定要先查询, 这样也好理解. 因为前端的界面就是先查询
+            Product productWangNew = productMapper.selectById(1);
+            productWangNew.setPrice(productWangNew.getPrice() - 30);
+            productMapper.updateById(productWangNew);
+        }
+
 
         // 老板查询价格 -> 这里是70. 因为小王在小李后面就进行了查询
         Product productBoss = productMapper.selectById(1);
