@@ -21,6 +21,8 @@ mybatis-plus:
       table-prefix: t_
       # 设置统一的主键生成策略, 避免在每个类上都加上TableId注解. 如果是NONE, 那么插入数据之后不会将id返回给实体对象
       id-type: AUTO
+  # 用来自动设置别名, 以包为单位. 包下的Bean都会被自动起别名. 例: User -> User | user 均可
+  type-aliases-package: com.atguigu.mybatisplus.pojo
 
 
 
