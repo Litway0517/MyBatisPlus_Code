@@ -10,13 +10,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 /**
- * 我batis +配置测试
+ * MybatisPlus配置测试
  *
  * @author DELL_
  * @date 2022/03/31
  */
 @SpringBootTest
-class MyBatisPlusConfigTest {
+class MyBatisPlusPluginsTest {
 
     @Autowired
     private UserMapper userMapper;
