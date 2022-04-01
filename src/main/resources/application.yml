@@ -24,7 +24,7 @@ mybatis-plus:
   # 用来自动设置别名, 以包为单位. 包下的Bean都会被自动起别名. 例: User -> User | user 均可
   type-aliases-package: com.atguigu.mybatisplus.pojo
   # 扫描通用枚举
-  type-enum-packages: com.atguigu.mybatisplus.enums
+  type-enums-package: com.atguigu.mybatisplus.enums
 
 
 
