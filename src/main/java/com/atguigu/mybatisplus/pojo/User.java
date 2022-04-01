@@ -67,6 +67,8 @@ public class User {
     /**
      * 性
      */
+    // @EnumValue注解是用来将枚举对应的值插入到数据库中
+    @EnumValue
     private SexEnum sex;
 
     /**
