@@ -1,6 +1,8 @@
 package com.atguigu.mybatisplus;
 
+import com.atguigu.mybatisplus.mapper.ProductMapper;
 import com.atguigu.mybatisplus.mapper.UserMapper;
+import com.atguigu.mybatisplus.pojo.Product;
 import com.atguigu.mybatisplus.pojo.User;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,6 +22,32 @@ class MyBatisPlusPluginsTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
+
+    // 模拟小李更改产品价格
+    @Test
+    public void testProduct() {
+        // 小李查询价格
+        Product productLi = productMapper.selectById(1);
+        System.out.println("小李查询的价格 -> " + productLi.getPrice());
+        // 小王查询价格
+        Product productWang = productMapper.selectById(1);
+        System.out.println("小王查询的价格 -> " + productWang.getPrice());
+
+        // 小李将价格 +50
+        productLi.setPrice(productLi.getPrice() + 50);
+        productMapper.updateById(productLi);
+
+        // 小王将价格 -30
+        productWang.setPrice(productWang.getPrice() - 30);
+        productMapper.updateById(productWang);
+
+        // 老板查询价格 -> 这里是70. 因为小王在小李后面就进行了查询
+        Product productBoss = productMapper.selectById(1);
+        System.out.println("老板查询的价格 -> " + productBoss.getPrice());
+    }
 
     // 自定义的SQL语句 搭配 MybatisPlus的分页插件
     @Test
