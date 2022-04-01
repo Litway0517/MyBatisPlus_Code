@@ -6,6 +6,15 @@
     <select id="getUserById" resultType="java.util.Map">
         select id, name, age, email from user where id = #{id}
     </select>
+
+    <select id="selectPageVo" resultType="com.atguigu.mybatisplus.pojo.User">
+        <!--
+            此时我们并不需要实现分页功能, 因为方法的返回值就是Page<User>, 让插件实现. 我们仅仅写逻辑
+        -->
+        select uid, user_name, age, email, is_deleted
+        from `t_user`
+        where is_deleted = '0' and age > #{age}
+    </select>
 </mapper>
 
 
