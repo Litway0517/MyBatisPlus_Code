@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus.pojo;
 
+import com.atguigu.mybatisplus.enums.SexEnum;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
 
@@ -62,6 +63,11 @@ public class User {
      * 电子邮件
      */
     private String email;
+
+    /**
+     * 性
+     */
+    private SexEnum sex;
 
     /**
      * 被删除
