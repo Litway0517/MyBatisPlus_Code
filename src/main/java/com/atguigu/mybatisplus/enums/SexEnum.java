@@ -1,13 +1,17 @@
 package com.atguigu.mybatisplus.enums;
 
+import lombok.Getter;
+
 /**
  * 性枚举
  *
  * @author DELL_
  * @date 2022/04/01
  */
+@Getter
 public enum SexEnum {
-    ;
+    MALE(1, "男"),
+    FEMALE(2, "女");
 
     /**
      * 性
@@ -18,39 +22,8 @@ public enum SexEnum {
      */
     private String sexName;
 
-    /**
-     * 获得性
-     *
-     * @return {@link Integer}
-     */
-    public Integer getSex() {
-        return sex;
-    }
-
-    /**
-     * 集合性
-     *
-     * @param sex 性
-     */
-    public void setSex(Integer sex) {
+    SexEnum(Integer sex, String sexName) {
         this.sex = sex;
-    }
-
-    /**
-     * 获得性名字
-     *
-     * @return {@link String}
-     */
-    public String getSexName() {
-        return sexName;
-    }
-
-    /**
-     * 设置性名
-     *
-     * @param sexName 性名字
-     */
-    public void setSexName(String sexName) {
         this.sexName = sexName;
     }
 }
