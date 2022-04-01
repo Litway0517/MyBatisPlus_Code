@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.Getter;
 
 /**
@@ -16,6 +17,8 @@ public enum SexEnum {
     /**
      * 性
      */
+    // @EnumValue注解是用来将枚举对应的值插入到数据库中
+    @EnumValue
     private Integer sex;
     /**
      * 性名字
