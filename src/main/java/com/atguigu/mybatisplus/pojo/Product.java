@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus.pojo;
 
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 
 /**
@@ -28,6 +29,8 @@ public class Product {
     /**
      * 版本
      */
+    // 加上Version注解, 标识此属性对应的表中的字段为版本号
+    @Version
     private Integer version;
 
 }
