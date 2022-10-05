@@ -49,7 +49,8 @@ public class MyBatisPlusWrapperTest {
             SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0
             AND (user_name LIKE ? AND age > ? AND age < ?)
          */
-        String username = "b";
+        // 条件为空, 下面的查询sql中like语句不会拼接上
+        String username = "";
         Integer ageMin = 20;
         Integer ageMax = 30;
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<User>();
