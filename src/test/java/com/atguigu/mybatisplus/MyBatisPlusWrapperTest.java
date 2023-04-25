@@ -21,7 +21,9 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private UserMapper userMapper;
 
-    // 使用lambda查询器 -> 执行更新操作
+    /**
+     * 使用lambda查询器 -> 执行更新操作
+     */
     @Test
     public void testLambdaUpdateWrapper() {
         /*
@@ -36,12 +38,14 @@ public class MyBatisPlusWrapperTest {
                 .ge(ageMin != null, User::getAge, ageMin)
                 .le(ageMax != null, User::getAge, ageMax);
         userLambdaUpdateWrapper.set(User::getName, "admin");
-        // 这里面在更新的时候, 会把主键也改掉, 出现了问题.
+        // 这里面在更新的时候, 会把主键也改掉, 出现了问题
         int update = userMapper.update(null, userLambdaUpdateWrapper);
         System.out.println("影响行数 -> " + update);
     }
 
-    // 使用lambda查询器 -> lambda的出现是为了避免将数据库表的字段名写错 是通过访问实体类所对应的字段名实现的
+    /**
+     * 使用lambda查询器 -> lambda的出现是为了避免将数据库表的字段名写错 是通过访问实体类所对应的字段名实现的
+     */
     @Test
     public void testLambdaQueryWrapper() {
         // 条件: 名称中包含b字母,  年龄 20-30
