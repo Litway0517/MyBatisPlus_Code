@@ -22,6 +22,19 @@ public class MyBatisPlusWrapperTest {
     private UserMapper userMapper;
 
     /**
+     * 主动加上嵌套括号
+     */
+    @Test
+    public void testOther() {
+        List<User> users = userMapper.selectList(new LambdaQueryWrapper<User>()
+                .select(User::getName, User::getAge)
+                .ge(User::getAge, 20)
+                .nested(i -> i.like(User::getName, "a").isNotNull(User::getEmail)));
+        users.forEach(System.out::println);
+
+    }
+
+    /**
      * 使用lambda查询器 -> 执行更新操作
      */
     @Test
