@@ -140,7 +140,9 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 通过QueryWrapper 查询部分信息, 使用Map进行保存
+    /**
+     * 通过QueryWrapper, 查询部分信息, 使用Map进行保存
+     */
     @Test
     public void testSelectByMap() {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
