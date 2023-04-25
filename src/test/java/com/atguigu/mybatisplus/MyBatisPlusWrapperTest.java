@@ -149,7 +149,9 @@ public class MyBatisPlusWrapperTest {
         list.forEach(System.out::println);
     }
 
-    // 通过QueryWrapper 更新动作 -> 条件更换了
+    /**
+     * 通过QueryWrapper, 实现更新
+     */
     @Test
     public void testUpdate2() {
         // 将用户名中包含有a并且(年龄大于20或邮箱为null)的用户信息修改
@@ -174,7 +176,9 @@ public class MyBatisPlusWrapperTest {
 
     }
 
-    // 通过QueryWrapper 更新动作 -> 通过QueryWrapper来实现更新.
+    /**
+     * 通过QueryWrapper, 实现更新
+     */
     @Test
     public void testUpdate() {
         // 将(年龄大于20并且用户名中包含有a)或邮箱为null的用户信息修改
