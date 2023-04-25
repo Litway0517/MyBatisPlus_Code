@@ -54,7 +54,7 @@ public class MyBatisPlusTest {
 
         // 根据map集合中的条件来查询 SQL -> SELECT id,name,age,email FROM user WHERE name = ? AND age = ?
         HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("name", "Jack");
+        map.put("user_name", "Jack");
         map.put("age", "20");
         List<User> users1 = userMapper.selectByMap(map);
         users1.forEach(System.out::println);
@@ -86,8 +86,8 @@ public class MyBatisPlusTest {
         // 通过Map集合删除. SQL -> DELETE FROM user WHERE name = ? AND age = ?
         HashMap<String, Object> map = new HashMap<String, Object>();
         // 存放删除的条件. 字段名 - 字段值
-        map.put("name", "lit");
-        map.put("age", "100");
+        map.put("user_name", "lit");
+        map.put("age", "92");
         int i1 = userMapper.deleteByMap(map);
         System.out.println("result -> " + i1);
 
