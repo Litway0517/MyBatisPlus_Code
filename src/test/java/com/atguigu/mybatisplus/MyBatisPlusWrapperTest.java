@@ -107,7 +107,9 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 通过UpdateWrapper 更新操作
+    /**
+     * 通过UpdateWrapper, 更新操作, 注意and条件在使用的时候是主动加上括号的
+     */
     @Test
     public void testUpdateByUpdateWrapper() {
         // 将用户名中包含有a并且(年龄大于20或邮箱为null)的用户信息修改
@@ -121,7 +123,7 @@ public class MyBatisPlusWrapperTest {
         userUpdateWrapper.set("user_name", "小蓝");
         userUpdateWrapper.set("email", "abc@atguigu.com");
 
-        // 使用得是updateWrapper所以不传入实体类
+        // 使用的是updateWrapper所以不传入实体类
         userMapper.update(null, userUpdateWrapper);
     }
 
