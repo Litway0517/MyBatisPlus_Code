@@ -61,7 +61,9 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 通过QueryWrapper 带条件的查询 -> 简洁 使用新的方法. 当条件为真时才会拼接SQL
+    /**
+     * 通过QueryWrapper, 带条件的查询, 当条件为真时才会拼接SQL
+     */
     @Test
     public void testSelectByCondition2() {
         // 条件: 名称中包含b字母,  年龄 20-30
@@ -81,7 +83,9 @@ public class MyBatisPlusWrapperTest {
         users.forEach(System.out::println);
     }
 
-    // 通过QueryWrapper 带条件的查询
+    /**
+     * 通过QueryWrapper, 带条件的查询
+     */
     @Test
     public void testSelectByCondition() {
         // 条件: 名称中包含b字母,  年龄 20-30
