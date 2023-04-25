@@ -4,7 +4,7 @@
 <mapper namespace="com.atguigu.mybatisplus.mapper.UserMapper">
 
     <select id="getUserById" resultType="java.util.Map">
-        select id, user_name, age, email from user where id = #{id}
+        select uid, user_name, age, email from t_user where uid = #{id}
     </select>
 
     <select id="selectPageVo" resultType="com.atguigu.mybatisplus.pojo.User">
