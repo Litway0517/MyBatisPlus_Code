@@ -125,7 +125,9 @@ public class MyBatisPlusWrapperTest {
         userMapper.update(null, userUpdateWrapper);
     }
 
-    // 通过QueryWrapper 子查询实例 inSql方法
+    /**
+     * 通过QueryWrapper, 子查询实例, inSql方法
+     */
     @Test
     public void testQueryWrapper2() {
         /*
