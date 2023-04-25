@@ -208,7 +208,9 @@ public class MyBatisPlusWrapperTest {
         System.out.println("影响行数 -> " + delete);
     }
 
-    // 通过QueryWrapper 带条件查询
+    /**
+     * 通过QueryWrapper, 带条件查询
+     */
     @Test
     public void testQuery2() {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
@@ -225,7 +227,9 @@ public class MyBatisPlusWrapperTest {
     }
 
 
-    // 通过QueryWrapper 带条件的查询
+    /**
+     * 通过QueryWrapper, 带条件的查询, 能够改成使用lambda查询, 避免写错字段
+     */
     @Test
     public void testQuery() {
         // 创建条件构造器
