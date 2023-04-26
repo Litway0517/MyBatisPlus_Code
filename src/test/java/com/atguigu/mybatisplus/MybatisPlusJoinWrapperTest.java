@@ -23,6 +23,16 @@ public class MybatisPlusJoinWrapperTest {
     @Autowired
     private EmployeeMapper employeeMapper;
 
+    @Test
+    public void testMPJWrapperSelectAssociation() {
+        List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getDepartmentId)
+                .selectAssociation(Department.class, EmployeeVo::getDepartment)
+                .leftJoin(Department.class, Department::getDepartmentId, Employee::getDepartmentId));
+
+        employeeVoList.forEach(System.out::println);
+    }
+
     /**
      * 测试MPJWrapper查询
      */
