@@ -48,18 +48,27 @@
             <version>3.5.2</version>
         </dependency>
 
+        <!-- mybatisplus join多表联查依赖 -->
+        <dependency>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join-boot-starter</artifactId>
+            <version>1.4.4</version>
+        </dependency>
+
         <!-- 用于简化实体类的开发 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
         <!-- druid数据源依赖 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.2.6</version>
         </dependency>
+
         <!-- mysql驱动包 -->
         <dependency>
             <groupId>mysql</groupId>
