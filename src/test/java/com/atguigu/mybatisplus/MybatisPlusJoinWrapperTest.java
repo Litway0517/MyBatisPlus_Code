@@ -5,6 +5,7 @@ import com.atguigu.mybatisplus.pojo.Department;
 import com.atguigu.mybatisplus.pojo.Employee;
 import com.atguigu.mybatisplus.pojo.EmployeeVo;
 import com.atguigu.mybatisplus.pojo.Job;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,26 @@ public class MybatisPlusJoinWrapperTest {
                 .leftJoin(Department.class, Department::getDepartmentId, Employee::getDepartmentId));
 
         employeeVoList.forEach(System.out::println);
+    }
+
+    /**
+     * 测试选择
+     */
+    @Test
+    public void testSelect() {
+        /*
+            当仅对单表查询时, 应该使用mybatisplus的wrapper, 而不能使用mybatisplus join的wrapper
+
+            SQL -> SELECT employee_id,`first_name`,`phone_number`,`department_id`
+                    FROM `employees` WHERE (`department_id` IN (60, 70, 80) OR `phone_number` LIKE '515%')
+         */
+        List<Employee> employeeList = employeeMapper.selectList(new LambdaQueryWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getPhoneNumber, Employee::getDepartmentId)
+                .inSql(Employee::getDepartmentId, "60, 70, 80")
+                .or()
+                .likeRight(Employee::getPhoneNumber, "515"));
+
+        employeeList.forEach(System.out::println);
     }
 
 }
