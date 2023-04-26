@@ -1,16 +1,13 @@
 package com.atguigu.mybatisplus;
 
 import com.atguigu.mybatisplus.mapper.EmployeeMapper;
-import com.atguigu.mybatisplus.mapper.JobMapper;
 import com.atguigu.mybatisplus.mapper.UserMapper;
 import com.atguigu.mybatisplus.pojo.*;
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,19 +24,6 @@ public class MyBatisPlusWrapperTest {
 
     @Autowired
     private EmployeeMapper employeeMapper;
-
-    /**
-     * 测试多表联查
-     */
-    @Test
-    public void testJoinSelect() {
-        List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
-                .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getEmail, Employee::getDepartmentId)
-                .select(Department::getDepartmentId, Department::getDepartmentName)
-                .leftJoin(Department.class, Department::getDepartmentId, Employee::getDepartmentId));
-
-        System.out.println(employeeVoList);
-    }
 
     @Test
     // @DS("slave_1")
