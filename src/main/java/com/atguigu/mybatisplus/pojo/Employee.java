@@ -1,6 +1,5 @@
 package com.atguigu.mybatisplus.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -14,7 +13,7 @@ import lombok.Data;
 @Data
 @TableName(value = "`employees`")
 public class Employee {
-    @TableId(value = "employee_id", type = IdType.AUTO)
+    @TableId(value = "employee_id")
     private Integer employeeId;
 
     @TableField(value = "`first_name`")
