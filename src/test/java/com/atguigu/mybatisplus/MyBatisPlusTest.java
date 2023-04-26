@@ -32,15 +32,19 @@ public class MyBatisPlusTest {
         userMapper.selectList(userWrapper);
     }
 
-    // 测试自定义的查询方法
+    /**
+     * 测试自定义的查询方法
+     */
     @Test
     public void testSelectBySelf() {
-        // 最重要的是要说明, MyBatisPlus框架只做增强不做修改. 所以开发人员仍然能够自己写接口并编写映射文件
+        // 最重要的是要说明, MyBatisPlus框架只做增强不做修改, 所以开发人员仍然能够自己写接口并编写映射文件
         Map<String, Object> userById = userMapper.getUserById(1L);
         System.out.println("自定义的mapper方法 -> " + userById);
     }
 
-    // 根据id查询. 根据ids批量查询. 传入Map<表的字段, 值>参数查询.
+    /**
+     * 测试查询, 根据id查询, 根据ids批量查询, 传入Map<表的字段, 值>参数查询
+     */
     @Test
     public void testSelect() {
         // 根据id查询 -> SELECT id,name,age,email FROM user WHERE id=?
@@ -64,8 +68,10 @@ public class MyBatisPlusTest {
         users2.forEach(System.out::println);
     }
 
+    /**
+     * 测试更新方法
+     */
     @Test
-    // 修改方法
     public void testUpdate() {
         // SQL -> UPDATE user SET name=?, email=? WHERE id=?
         User user = new User();
@@ -76,8 +82,10 @@ public class MyBatisPlusTest {
         System.out.println("result -> " + i);
     }
 
+    /**
+     * 测试删除
+     */
     @Test
-    // 测试删除
     public void testDelete() {
         // SQL -> DELETE FROM user WHERE id=?
         int i = userMapper.deleteById(1507301491378589697L);
@@ -99,7 +107,9 @@ public class MyBatisPlusTest {
 
     }
 
-    // 查询所有数据
+    /**
+     * 查询所有数据, 未设置查询条件
+     */
     @Test
     public void testSelectList() {
         // Wrapper是条件构造器
@@ -108,6 +118,9 @@ public class MyBatisPlusTest {
         users.forEach(System.out::println);
     }
 
+    /**
+     * 测试插入方法
+     */
     @Test
     public void testInsert() {
         // SQL -> INSERT INTO user ( id, name, age, email ) VALUES ( ?, ?, ?, ? )
