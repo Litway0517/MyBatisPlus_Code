@@ -40,6 +40,14 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.1</version>
         </dependency>
+
+        <!-- dynamic-datasource多数据源依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+
         <!-- 用于简化实体类的开发 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
