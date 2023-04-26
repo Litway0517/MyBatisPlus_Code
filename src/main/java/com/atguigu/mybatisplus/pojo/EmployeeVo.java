@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus.pojo;
 
+import jdk.internal.instrumentation.TypeMapping;
 import lombok.Data;
 
 import java.util.Date;
@@ -32,6 +33,8 @@ public class EmployeeVo {
     private Integer managerId;
 
     private Integer departmentId;
+
+    private String jobTitle;
 
     private Department department;
 
