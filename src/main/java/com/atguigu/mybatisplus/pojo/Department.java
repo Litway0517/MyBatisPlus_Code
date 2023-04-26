@@ -11,25 +11,14 @@ import lombok.Data;
 @Data
 @TableName(value = "departments")
 public class Department {
-    /**
-     *
-     */
+
     @TableId(value = "department_id")
     private Integer departmentId;
 
-    /**
-     *
-     */
     private String departmentName;
 
-    /**
-     *
-     */
     private Integer managerId;
 
-    /**
-     *
-     */
     private Integer locationId;
 }
 

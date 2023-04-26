@@ -1,6 +1,5 @@
 package com.atguigu.mybatisplus.pojo;
 
-import jdk.internal.instrumentation.TypeMapping;
 import lombok.Data;
 
 import java.util.Date;
