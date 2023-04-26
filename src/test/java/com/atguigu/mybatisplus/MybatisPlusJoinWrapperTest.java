@@ -44,16 +44,17 @@ public class MybatisPlusJoinWrapperTest {
     }
 
     /**
-     * 测试多表联查
+     * 测试单表查询
      */
     @Test
     public void testJoinSelect() {
-        List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
-                .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getEmail, Employee::getDepartmentId)
-                .select(Department::getDepartmentId, Department::getDepartmentName)
-                .leftJoin(Department.class, Department::getDepartmentId, Employee::getDepartmentId));
+        /*
+            SQL -> SELECT t.employee_id,t.`first_name`,t.`email`,t.`department_id` FROM `employees` t
+         */
+        List<Employee> employeeList = employeeMapper.selectJoinList(Employee.class, new MPJLambdaWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getEmail, Employee::getDepartmentId));
 
-        employeeVoList.forEach(System.out::println);
+        employeeList.forEach(System.out::println);
     }
 
     /**
