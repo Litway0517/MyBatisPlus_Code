@@ -1,10 +1,7 @@
 package com.atguigu.mybatisplus;
 
 import com.atguigu.mybatisplus.mapper.EmployeeMapper;
-import com.atguigu.mybatisplus.pojo.Department;
-import com.atguigu.mybatisplus.pojo.Employee;
-import com.atguigu.mybatisplus.pojo.EmployeeVo;
-import com.atguigu.mybatisplus.pojo.Job;
+import com.atguigu.mybatisplus.pojo.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.junit.jupiter.api.Test;
@@ -23,8 +20,36 @@ public class MybatisPlusJoinWrapperTest {
     @Autowired
     private EmployeeMapper employeeMapper;
 
+    /**
+     * 测试MPJLambdaWrapper一对一查询部分字段
+     */
+    @Test
+    public void testMPJWrapperSelectAssociationSomeField() {
+        /*
+            SQL -> SELECT t.employee_id,t.`first_name`,t1.department_id,t1.department_name
+                    FROM `employees` t LEFT JOIN departments t1 ON (t1.department_id = t.`department_id`)
+         */
+        List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName)
+                .selectAssociation(Department.class, EmployeeVo::getDepartment, map -> map
+                        .id(Department::getDepartmentId)
+                        .result(Department::getDepartmentName))
+                .leftJoin(Department.class, Department::getDepartmentId, Employee::getDepartmentId));
+
+        employeeVoList.forEach(System.out::println);
+    }
+
+    /**
+     * 测试MPJLambdaWrapper一对一查询
+     */
     @Test
     public void testMPJWrapperSelectAssociation() {
+        /*
+            SQL -> SELECT t.employee_id,t.`first_name`,t.`department_id`,
+                    t1.department_id AS joina_department_id,t1.department_name,
+                    t1.manager_id,t1.location_id
+                    FROM `employees` t LEFT JOIN departments t1 ON (t1.department_id = t.`department_id`)
+         */
         List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
                 .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getDepartmentId)
                 .selectAssociation(Department.class, EmployeeVo::getDepartment)
@@ -34,7 +59,7 @@ public class MybatisPlusJoinWrapperTest {
     }
 
     /**
-     * 测试MPJWrapper查询
+     * 测试MPJLambdaWrapper查询
      */
     @Test
     public void testMPJWrapperSelect() {
