@@ -2,12 +2,25 @@ spring:
   # yml配置文件的方式是, 相同的部分能够用缩进的形式实现.
   # 配置数据源信息 等价于 spring.datasource.type=com.zaxxer.hikari.HikariDataSource
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    # 配置连接数据库的信息
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mybatisplus_code?characterEncoding=utf-8&useSSL=false
-    username: root
-    password: root
+    dynamic:
+      # 设置默认的数据源或者数据源组, 默认值即为master
+      primary: master
+      # 严格匹配数据源, 默认false. true未匹配到指定数据源时抛异常, false使用默认数据源
+      strict: false
+      datasource:
+        master:
+          # 配置连接数据库的信息
+          url: jdbc:mysql://localhost:3306/mybatisplus_code?characterEncoding=utf-8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          type: com.alibaba.druid.pool.DruidDataSource
+        slave_1:
+          url: jdbc:mysql://localhost:3306/temp?characterEncoding=utf-8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          type: com.alibaba.druid.pool.DruidDataSource
 
 # 配置 MyBatisPlus 相关文件
 mybatis-plus:
