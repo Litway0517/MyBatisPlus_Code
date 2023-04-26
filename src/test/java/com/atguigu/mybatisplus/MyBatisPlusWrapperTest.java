@@ -1,7 +1,10 @@
 package com.atguigu.mybatisplus;
 
+import com.atguigu.mybatisplus.mapper.EmployeeMapper;
 import com.atguigu.mybatisplus.mapper.UserMapper;
+import com.atguigu.mybatisplus.pojo.Employee;
 import com.atguigu.mybatisplus.pojo.User;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -20,6 +23,16 @@ public class MyBatisPlusWrapperTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
+    @Test
+    // @DS("slave_1")
+    public void testDynamicDatasource() {
+        List<Employee> employeeList = employeeMapper.selectList(null);
+        System.out.println(employeeList);
+    }
 
     /**
      * 主动加上嵌套括号
