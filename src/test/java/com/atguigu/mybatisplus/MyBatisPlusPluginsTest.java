@@ -57,7 +57,9 @@ class MyBatisPlusPluginsTest {
         System.out.println("老板查询的价格 -> " + productBoss.getPrice());
     }
 
-    // 自定义的SQL语句 搭配 MybatisPlus的分页插件
+    /**
+     * 测试自定义的查询方法, 搭配MybatisPlus的分页插件, 自定义方法如果需要实现分页功能, 要求第一个参数必须是Page类型对象
+     */
     @Test
     public void testSelectPageVo() {
         /*
@@ -77,13 +79,15 @@ class MyBatisPlusPluginsTest {
     }
 
 
-    // MybatisPlus的分页功能 搭配 LambdaQueryWrapper查询器
+    /**
+     * 测试分页查询, MybatisPlus的分页功能, 需要配置分页插件, 搭配LambdaQueryWrapper查询器
+     */
     @Test
     public void testSelectByPage() {
         /*
             SQL -> SELECT uid,user_name AS name,age,email,is_deleted FROM t_user WHERE is_deleted=0 LIMIT ?,?
             分页的参数是: 该页索引, 每页中的条数. 从index处开始的后面一页
-                比如一页3条, 那么第三页的参数为 8, 3
+                比如一页3条, 那么第三页的参数为 6, 3
          */
         Page<User> userPage = new Page<User>(2, 3);
         // 设置条件
