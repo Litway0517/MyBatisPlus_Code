@@ -21,6 +21,60 @@ public class MybatisPlusJoinWrapperTest {
     private EmployeeMapper employeeMapper;
 
     /**
+     * 测试MPJLambdaWrapper一对一查询, 不指定实体字段映射
+     * EmployeeVo中嵌套DepartmentVo, DepartmentVo中嵌套Location
+     */
+    @Test
+    public void testMPJWrapperSelectAssociSomeFieldNoSpecify() {
+        /*
+            SQL -> SELECT t.employee_id,t.`first_name`,t.`department_id`,t1.department_id AS joina_department_id,
+                    t1.department_name,t2.location_id,t2.city
+                    FROM `employees` t
+                    LEFT JOIN departments t1 ON (t1.department_id = t.`department_id`)
+                    LEFT JOIN locations t2 ON (t2.location_id = t1.location_id);
+         */
+        List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getDepartmentId)
+                .selectAssociation(EmployeeVo::getDepartmentVo, map -> map
+                        .id(Department::getDepartmentId, DepartmentVo::getDepartmentId)
+                        .result(Department::getDepartmentName)
+                        .association(Location.class, DepartmentVo::getLocation, map2 -> map2
+                                .id(Location::getLocationId)
+                                .result(Location::getCity)))
+                .select(Job::getJobTitle)
+                .leftJoin(Department.class, Department::getDepartmentId, Employee::getDepartmentId)
+                .leftJoin(Location.class, Location::getLocationId, Department::getLocationId)
+                .leftJoin(Job.class, Job::getJobId, Employee::getEmployeeId));
+
+        employeeVoList.forEach(System.out::println);
+    }
+
+    /**
+     * 测试MPJLambdaWrapper一对一查询未指定带查询实体情况下的部分字段查询
+     * 结果接收的不太好
+     */
+    @Test
+    public void testMPJWrapperSelectAssociationSomeFieldNoSpecify() {
+        /*
+            SQL -> SELECT t.employee_id,t.`first_name`,t.`department_id`,
+                    dept.department_id AS joina_department_id,
+                    t2.job_title
+                    FROM `employees` t
+                    LEFT JOIN departments dept ON (dept.department_id = t.employee_id)
+                    LEFT JOIN jobs t2 ON (t2.job_id = t.`job_id`);
+         */
+        List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getDepartmentId)
+                .selectAssociation(EmployeeVo::getDepartment, map -> map
+                        .id(Department::getDepartmentId)
+                        .result(Job::getJobTitle, Department::getDepartmentName))
+                .leftJoin(Department.class, "dept", Department::getDepartmentId, Employee::getEmployeeId)
+                .leftJoin(Job.class, Job::getJobId, Employee::getJobId));
+
+        employeeVoList.forEach(System.out::println);
+    }
+
+    /**
      * 测试MPJLambdaWrapper一对一查询部分字段
      */
     @Test
