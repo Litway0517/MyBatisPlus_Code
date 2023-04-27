@@ -22,5 +22,7 @@ public class DepartmentVo {
     private List<Employee> employeeList;
 
     private Location location;
+
+    private Employee manager;
 }
 

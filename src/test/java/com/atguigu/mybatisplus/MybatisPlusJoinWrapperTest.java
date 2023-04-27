@@ -25,6 +25,36 @@ public class MybatisPlusJoinWrapperTest {
     private DepartmentMapper departmentMapper;
 
     /**
+     * 测试MPJLambdaWrapper一对一查询, 一对多查询, 连接同一张表两次
+     * DepartmentVo中嵌套Employee部门管理员, 同时嵌套List<Employee>部门员工
+     */
+    @Test
+    public void testSelectJoinAssociation() {
+        /*
+            SQL -> SELECT t.department_id,t.department_name,t.manager_id,t.location_id,
+                    t1.employee_id,t1.`first_name`,t2.employee_id AS joina_employee_id,
+                    t2.`first_name` AS joina_first_name
+                    FROM departments t
+                    LEFT JOIN `employees` t1 ON (t1.employee_id = t.manager_id)
+                    LEFT JOIN `employees` t2 ON (t2.`department_id` = t.department_id)
+                    WHERE (t.department_id = '80');
+         */
+        List<DepartmentVo> departmentVoList = departmentMapper.selectJoinList(DepartmentVo.class, new MPJLambdaWrapper<Department>()
+                .selectAll(Department.class)
+                .selectAssociation("t1", Employee.class, DepartmentVo::getManager, map -> map
+                        .id(Employee::getEmployeeId)
+                        .result(Employee::getFirstName))
+                .selectCollection("t2", Employee.class, DepartmentVo::getEmployeeList, map2 -> map2
+                        .id(Employee::getEmployeeId, Employee::getEmployeeId)
+                        .result(Employee::getFirstName, Employee::getFirstName))
+                .leftJoin(Employee.class, Employee::getEmployeeId, Department::getManagerId)
+                .leftJoin(Employee.class, Employee::getDepartmentId, Department::getDepartmentId)
+                .eq(Department::getDepartmentId, "80"));
+
+        departmentVoList.forEach(System.out::println);
+    }
+
+    /**
      * 测试MPJLambdaWrapper一对多查询, 不指定实体字段映射
      * DepartmentVo中嵌套List<Employee>和Location
      */
@@ -36,7 +66,7 @@ public class MybatisPlusJoinWrapperTest {
                     t2.city,t2.street_address
                     FROM departments t LEFT JOIN `employees` t1 ON (t1.`department_id` = t.department_id)
                     LEFT JOIN locations t2 ON (t2.location_id = t.location_id)
-                    WHERE (t.department_id = '100');
+                    WHERE (t.department_id = '100')
          */
         List<DepartmentVo> departmentVoList = departmentMapper.selectJoinList(DepartmentVo.class, new MPJLambdaWrapper<Department>()
                 .select(Department::getDepartmentId, Department::getDepartmentName, Department::getLocationId)
