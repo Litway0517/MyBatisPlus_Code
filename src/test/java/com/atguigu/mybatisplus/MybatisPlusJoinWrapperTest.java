@@ -1,5 +1,6 @@
 package com.atguigu.mybatisplus;
 
+import com.atguigu.mybatisplus.mapper.DepartmentMapper;
 import com.atguigu.mybatisplus.mapper.EmployeeMapper;
 import com.atguigu.mybatisplus.pojo.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,6 +21,33 @@ public class MybatisPlusJoinWrapperTest {
     @Autowired
     private EmployeeMapper employeeMapper;
 
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
+    /**
+     * 测试MPJLambdaWrapper一对多查询, 全部映射, 将关联实体的全部字段查出来
+     * DepartmentVo中嵌套List<Employee>
+     */
+    @Test
+    public void testMPJWrapperSelectCollection() {
+        /*
+            SQL -> SELECT t.department_id,t.department_name,
+                    t1.employee_id,t1.`first_name`,t1.`last_name`,t1.`email`,t1.`phone_number`,
+                    t1.`hire_date`,t1.`job_id`,t1.`salary`,t1.`commission_pct`,t1.`manager_id`,
+                    t1.`department_id` AS joina_department_id
+                    FROM departments t
+                    LEFT JOIN `employees` t1 ON (t1.`department_id` = t.department_id)
+                    WHERE (t.department_id = '20')
+         */
+        List<DepartmentVo> departmentVoList = departmentMapper.selectJoinList(DepartmentVo.class, new MPJLambdaWrapper<Department>()
+                .select(Department::getDepartmentId, Department::getDepartmentName)
+                .selectCollection(Employee.class, DepartmentVo::getEmployeeList)
+                .leftJoin(Employee.class, Employee::getDepartmentId, Department::getDepartmentId)
+                .eq(Department::getDepartmentId, "20"));
+
+        departmentVoList.forEach(System.out::println);
+    }
+
     /**
      * 测试MPJLambdaWrapper一对一查询, 不指定实体字段映射
      * EmployeeVo中嵌套DepartmentVo, DepartmentVo中嵌套Location
@@ -31,7 +59,7 @@ public class MybatisPlusJoinWrapperTest {
                     t1.department_name,t2.location_id,t2.city
                     FROM `employees` t
                     LEFT JOIN departments t1 ON (t1.department_id = t.`department_id`)
-                    LEFT JOIN locations t2 ON (t2.location_id = t1.location_id);
+                    LEFT JOIN locations t2 ON (t2.location_id = t1.location_id)
          */
         List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
                 .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getDepartmentId)
@@ -61,7 +89,7 @@ public class MybatisPlusJoinWrapperTest {
                     t2.job_title
                     FROM `employees` t
                     LEFT JOIN departments dept ON (dept.department_id = t.employee_id)
-                    LEFT JOIN jobs t2 ON (t2.job_id = t.`job_id`);
+                    LEFT JOIN jobs t2 ON (t2.job_id = t.`job_id`)
          */
         List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
                 .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getDepartmentId)
