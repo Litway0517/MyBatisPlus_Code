@@ -25,6 +25,35 @@ public class MybatisPlusJoinWrapperTest {
     private DepartmentMapper departmentMapper;
 
     /**
+     * 测试MPJLambdaWrapper一对多查询, 不指定实体字段映射
+     * DepartmentVo中嵌套List<Employee>和Location
+     */
+    @Test
+    public void testMPJWrapperSelectCollectionNoSpecify() {
+        /*
+            SQL -> SELECT t.department_id,t.department_name,t.location_id,
+                    t1.employee_id,t1.`first_name`,
+                    t2.city,t2.street_address
+                    FROM departments t LEFT JOIN `employees` t1 ON (t1.`department_id` = t.department_id)
+                    LEFT JOIN locations t2 ON (t2.location_id = t.location_id)
+                    WHERE (t.department_id = '100');
+         */
+        List<DepartmentVo> departmentVoList = departmentMapper.selectJoinList(DepartmentVo.class, new MPJLambdaWrapper<Department>()
+                .select(Department::getDepartmentId, Department::getDepartmentName, Department::getLocationId)
+                .selectCollection(DepartmentVo::getEmployeeList, map -> map
+                        .id(Employee::getEmployeeId, Employee::getEmployeeId)
+                        .result(Employee::getFirstName))
+                .selectAssociation(DepartmentVo::getLocation, locationMap -> locationMap
+                        .result(Location::getCity, Location::getCity)
+                        .result(Location::getStreetAddress))
+                .leftJoin(Employee.class, Employee::getDepartmentId, Department::getDepartmentId)
+                .leftJoin(Location.class, Location::getLocationId, Department::getLocationId)
+                .eq(Department::getDepartmentId, "100"));
+
+        departmentVoList.forEach(System.out::println);
+    }
+
+    /**
      * 测试MPJLambdaWrapper一对多查询, 全部映射, 将关联实体的全部字段查出来
      * DepartmentVo中嵌套List<Employee>
      */
