@@ -42,8 +42,8 @@ public class MybatisPlusJoinWrapperTest {
     }
 
     /**
-     * 测试MPJLambdaWrapper提供的以类为单位的查询方法
-     * User表中有10个字段, 而业务只需要其中的某3个, 使用mybatis-plus提供的select查询时需要一个属性一个属性填入很不优雅
+     * 测试MPJLambdaWrapper中根据封装对象属性的查询方法
+     * 假设User表中有10个字段, 而业务只需要其中的某3个, 使用mybatis-plus提供的select查询时需要一个属性一个属性填入很不优雅
      * 现在我们可以用selectAsClass(User.class, UserVo.class)
      * 即可按所需的UserVo返回, 前提是UserVo.class中的属性必须是User.class中存在的
      */
