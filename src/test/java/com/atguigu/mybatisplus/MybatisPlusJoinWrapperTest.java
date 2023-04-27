@@ -4,6 +4,7 @@ import com.atguigu.mybatisplus.mapper.DepartmentMapper;
 import com.atguigu.mybatisplus.mapper.EmployeeMapper;
 import com.atguigu.mybatisplus.pojo.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,22 @@ public class MybatisPlusJoinWrapperTest {
     private DepartmentMapper departmentMapper;
 
     /**
+     * 测试MPJLambdaWrapper分页查询, 需要在mybatisplus中配置分页插件
+     */
+    @Test
+    public void testMPJWrapperSelectPage() {
+        /*
+            SQL -> SELECT t.department_id,t.department_name,t.manager_id,t.location_id FROM departments t LIMIT 10
+         */
+        Page<DepartmentVo> page = new Page<>();
+        Page<DepartmentVo> departmentVoPage = departmentMapper.selectJoinPage(page, DepartmentVo.class,
+                new MPJLambdaWrapper<Department>()
+                        .selectAsClass(Department.class, DepartmentVo.class));
+
+        departmentVoPage.getRecords().forEach(System.out::println);
+    }
+
+    /**
      * 测试MPJLambdaWrapper提供的以类为单位的查询方法
      * User表中有10个字段, 而业务只需要其中的某3个, 使用mybatis-plus提供的select查询时需要一个属性一个属性填入很不优雅
      * 现在我们可以用selectAsClass(User.class, UserVo.class)
@@ -32,6 +49,13 @@ public class MybatisPlusJoinWrapperTest {
      */
     @Test
     public void testSelectAsClass() {
+        /*
+            SQL -> SELECT t.department_id,t.department_name,t.manager_id,t.location_id,
+                    t1.employee_id,t1.`first_name`
+                    FROM departments t
+                    LEFT JOIN `employees` t1 ON (t1.employee_id = t.manager_id)
+                    WHERE (t.department_id = '60')
+         */
         List<DepartmentVo> departmentVoList = departmentMapper.selectJoinList(DepartmentVo.class, new MPJLambdaWrapper<Department>()
                 .selectAsClass(Department.class, DepartmentVo.class)
                 .selectAssociation(DepartmentVo::getManager, map -> map
@@ -253,7 +277,7 @@ public class MybatisPlusJoinWrapperTest {
     }
 
     /**
-     * 测试选择
+     * 测试查询
      */
     @Test
     public void testSelect() {
