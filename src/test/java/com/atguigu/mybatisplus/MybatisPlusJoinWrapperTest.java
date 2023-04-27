@@ -25,6 +25,25 @@ public class MybatisPlusJoinWrapperTest {
     private DepartmentMapper departmentMapper;
 
     /**
+     * 测试MPJLambdaWrapper提供的以类为单位的查询方法
+     * User表中有10个字段, 而业务只需要其中的某3个, 使用mybatis-plus提供的select查询时需要一个属性一个属性填入很不优雅
+     * 现在我们可以用selectAsClass(User.class, UserVo.class)
+     * 即可按所需的UserVo返回, 前提是UserVo.class中的属性必须是User.class中存在的
+     */
+    @Test
+    public void testSelectAsClass() {
+        List<DepartmentVo> departmentVoList = departmentMapper.selectJoinList(DepartmentVo.class, new MPJLambdaWrapper<Department>()
+                .selectAsClass(Department.class, DepartmentVo.class)
+                .selectAssociation(DepartmentVo::getManager, map -> map
+                        .id(Employee::getEmployeeId)
+                        .result(Employee::getFirstName))
+                .leftJoin(Employee.class, Employee::getEmployeeId, Department::getManagerId)
+                .eq(Department::getDepartmentId, "60"));
+
+        departmentVoList.forEach(System.out::println);
+    }
+
+    /**
      * 测试MPJLambdaWrapper一对一查询, 一对多查询, 连接同一张表两次
      * DepartmentVo中嵌套Employee部门管理员, 同时嵌套List<Employee>部门员工
      */
@@ -37,7 +56,7 @@ public class MybatisPlusJoinWrapperTest {
                     FROM departments t
                     LEFT JOIN `employees` t1 ON (t1.employee_id = t.manager_id)
                     LEFT JOIN `employees` t2 ON (t2.`department_id` = t.department_id)
-                    WHERE (t.department_id = '80');
+                    WHERE (t.department_id = '80')
          */
         List<DepartmentVo> departmentVoList = departmentMapper.selectJoinList(DepartmentVo.class, new MPJLambdaWrapper<Department>()
                 .selectAll(Department.class)
