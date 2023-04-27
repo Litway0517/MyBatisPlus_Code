@@ -37,4 +37,6 @@ public class EmployeeVo {
 
     private Department department;
 
+    private DepartmentVo departmentVo;
+
 }

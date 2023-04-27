@@ -20,5 +20,7 @@ public class DepartmentVo {
     private Integer locationId;
 
     private List<Employee> employeeList;
+
+    private Location location;
 }
 
