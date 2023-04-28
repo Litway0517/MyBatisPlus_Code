@@ -5,7 +5,6 @@ import com.atguigu.mybatisplus.mapper.EmployeeMapper;
 import com.atguigu.mybatisplus.pojo.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.yulichang.query.MPJQueryWrapper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,24 @@ public class MybatisPlusJoinWrapperTest {
 
     @Autowired
     private DepartmentMapper departmentMapper;
+
+    /**
+     * 测试MPJLambdaWrapper分页查询, 一对多查询
+     * 分页部门中存在的员工, DepartmentVo中嵌套List<Employee>
+     */
+    @Test
+    public void testMPJWrapperSelectPageCollection() {
+        Page<DepartmentVo> page = new Page<>();
+        Page<DepartmentVo> departmentVoPage = departmentMapper.selectJoinPage(page, DepartmentVo.class, new MPJLambdaWrapper<Department>()
+                .selectAsClass(Department.class, DepartmentVo.class)
+                .selectCollection(DepartmentVo::getEmployeeList, map -> map
+                        .id(Employee::getEmployeeId, Employee::getEmployeeId)
+                        .result(Employee::getFirstName))
+                .leftJoin(Employee.class, Employee::getDepartmentId, Department::getDepartmentId)
+        );
+
+        departmentVoPage.getRecords().forEach(System.out::println);
+    }
 
     /**
      * 测试MPJLambdaWrapper记录数量查询, 查询符合条件的记录数
