@@ -26,6 +26,19 @@ public class MybatisPlusJoinWrapperTest {
     private DepartmentMapper departmentMapper;
 
     /**
+     * 测试Lambda子查询, 这里采用的是硬编码方式
+     */
+    @Test
+    public void testLambdaWrapperSelectSub() {
+        List<Employee> employeeList = employeeMapper.selectList(new LambdaQueryWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName)
+                .gtSql(Employee::getSalary, "select salary from employees where last_name = 'Chen'")
+        );
+
+        employeeList.forEach(System.out::println);
+    }
+
+    /**
      * 测试MPJLambdaWrapper分页查询, 一对多查询
      * 分页部门中存在的员工, DepartmentVo中嵌套List<Employee>
      */
