@@ -5,6 +5,7 @@ import com.atguigu.mybatisplus.mapper.EmployeeMapper;
 import com.atguigu.mybatisplus.pojo.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.yulichang.query.MPJQueryWrapper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,26 @@ public class MybatisPlusJoinWrapperTest {
 
     @Autowired
     private DepartmentMapper departmentMapper;
+
+    /**
+     * 测试MPJLambdaWrapper记录数量查询, 查询符合条件的记录数
+     */
+    @Test
+    public void testMPJWrapperSelectCount() {
+        /*
+            查询60部门中的员工数量
+            SQL -> SELECT COUNT( t.department_id )
+                    FROM departments t
+                    LEFT JOIN `employees` t1 ON (t1.`department_id` = t.department_id)
+                    WHERE (t.department_id = '60')
+         */
+        Long count = departmentMapper.selectJoinCount(new MPJLambdaWrapper<Department>()
+                .select(Department::getDepartmentId)
+                .leftJoin(Employee.class, Employee::getDepartmentId, Department::getDepartmentId)
+                .eq(Department::getDepartmentId, "60"));
+
+        System.out.println(count);
+    }
 
     /**
      * 测试MPJLambdaWrapper分页查询, 需要在mybatisplus中配置分页插件
