@@ -25,6 +25,9 @@ public class MyBatisPlusWrapperTest {
     @Autowired
     private EmployeeMapper employeeMapper;
 
+    /**
+     * 测试其他数据源, 方法上的注解未生效, 但是官网说明支持在方法上实用, mapper层注解生效
+     */
     @Test
     // @DS("slave_1")
     public void testDynamicDatasource() {
