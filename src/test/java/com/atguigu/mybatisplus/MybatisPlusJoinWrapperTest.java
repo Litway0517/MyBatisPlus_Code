@@ -208,11 +208,14 @@ public class MybatisPlusJoinWrapperTest {
     @Test
     public void testMPJWrapperSelectAssociSomeFieldNoSpecify() {
         /*
-            SQL -> SELECT t.employee_id,t.`first_name`,t.`department_id`,t1.department_id AS joina_department_id,
-                    t1.department_name,t2.location_id,t2.city
+            SQL -> SELECT t.employee_id,t.`first_name`,t.`department_id`,
+                    t3.job_title,
+                    t1.department_id AS joina_department_id,t1.department_name,
+                    t2.location_id,t2.city
                     FROM `employees` t
                     LEFT JOIN departments t1 ON (t1.department_id = t.`department_id`)
                     LEFT JOIN locations t2 ON (t2.location_id = t1.location_id)
+                    LEFT JOIN jobs t3 ON (t3.job_id = t.employee_id)
          */
         List<EmployeeVo> employeeVoList = employeeMapper.selectJoinList(EmployeeVo.class, new MPJLambdaWrapper<Employee>()
                 .select(Employee::getEmployeeId, Employee::getFirstName, Employee::getDepartmentId)
@@ -297,7 +300,7 @@ public class MybatisPlusJoinWrapperTest {
      * 测试MPJLambdaWrapper查询
      */
     @Test
-    public void testMPJWrapperSelect() {
+    public void testMPJWrapperSelectAs() {
         /*
             使用selectAs查询
                 将其他实体的某个属性添加到主实体中, jobTitle 作为 EmployeeVo实体的成员
