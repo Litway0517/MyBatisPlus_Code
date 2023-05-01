@@ -25,6 +25,17 @@ public class MybatisPlusJoinWrapperTest {
     @Autowired
     private DepartmentMapper departmentMapper;
 
+    @Test
+    public void testMPJLambdaWrapperSelectJoinPage() {
+        Page<EmployeeVo> page = new Page<>();
+        Page<EmployeeVo> employeeVoPage = employeeMapper.selectJoinPage(page, EmployeeVo.class, new MPJLambdaWrapper<Employee>()
+                .select(Employee::getEmployeeId, Employee::getFirstName)
+                .select(Job::getJobTitle)
+                .leftJoin(Job.class, Job::getJobId, Employee::getJobId));
+
+        employeeVoPage.getRecords().forEach(System.out::println);
+    }
+
     /**
      * 测试Lambda子查询, 这里采用的是硬编码方式
      */
