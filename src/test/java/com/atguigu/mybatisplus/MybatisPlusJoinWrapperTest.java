@@ -25,6 +25,9 @@ public class MybatisPlusJoinWrapperTest {
     @Autowired
     private DepartmentMapper departmentMapper;
 
+    /**
+     * 测试MPJLambdaWrapper分页查询, 不包含一对多
+     */
     @Test
     public void testMPJLambdaWrapperSelectJoinPage() {
         Page<EmployeeVo> page = new Page<>();
