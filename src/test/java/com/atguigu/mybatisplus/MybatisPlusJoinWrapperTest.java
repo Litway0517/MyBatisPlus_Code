@@ -25,6 +25,18 @@ public class MybatisPlusJoinWrapperTest {
     @Autowired
     private DepartmentMapper departmentMapper;
 
+    @Test
+    public void testMPJLambdaWrapperSelectJoinPageOrderBy() {
+        Page<EmployeeVo> page = new Page<>();
+        Page<EmployeeVo> employeeVoPage = employeeMapper.selectJoinPage(page, EmployeeVo.class, new MPJLambdaWrapper<Employee>()
+                .selectAll(Employee.class)
+                .select(Job::getJobTitle)
+                .leftJoin(Job.class, Job::getJobId, Employee::getJobId)
+                .orderBy(true, true, Employee::getSalary));
+
+        employeeVoPage.getRecords().forEach(System.out::println);
+    }
+
     /**
      * 测试MPJLambdaWrapper分页查询, 不包含一对多
      */
