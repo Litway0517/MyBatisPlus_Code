@@ -25,6 +25,9 @@ public class MybatisPlusJoinWrapperTest {
     @Autowired
     private DepartmentMapper departmentMapper;
 
+    /**
+     * 测试MPJLambdaWrapper分页查询, 并根据员工薪水升序排序
+     */
     @Test
     public void testMPJLambdaWrapperSelectJoinPageOrderBy() {
         Page<EmployeeVo> page = new Page<>();
