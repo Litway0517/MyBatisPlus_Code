@@ -59,9 +59,14 @@ public class MybatisPlusJoinWrapperTest {
      */
     @Test
     public void testLambdaWrapperSelectSub() {
+        /*
+            SQL -> SELECT employee_id,`first_name`
+                    FROM `employees`
+                    WHERE (`salary` > (select salary from employees where email = 'VPATABAL'))
+         */
         List<Employee> employeeList = employeeMapper.selectList(new LambdaQueryWrapper<Employee>()
                 .select(Employee::getEmployeeId, Employee::getFirstName)
-                .gtSql(Employee::getSalary, "select salary from employees where last_name = 'Chen'")
+                .gtSql(Employee::getSalary, "select salary from employees where email = 'VPATABAL'")
         );
 
         employeeList.forEach(System.out::println);
