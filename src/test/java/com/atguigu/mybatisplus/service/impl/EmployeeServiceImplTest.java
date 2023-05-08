@@ -19,6 +19,9 @@ public class EmployeeServiceImplTest {
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * 测试新增一条数据
+     */
     @Test
     public void testSave() {
         Employee employee = new Employee();
