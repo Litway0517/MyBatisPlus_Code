@@ -2,6 +2,7 @@ package com.atguigu.mybatisplus.service.impl;
 
 import com.atguigu.mybatisplus.pojo.Employee;
 import com.atguigu.mybatisplus.service.EmployeeService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,6 +37,13 @@ public class EmployeeServiceImplTest {
         employee.setManagerId(205);
         employee.setDepartmentId(110);
         employeeService.save(employee);
+    }
+
+    @Test
+    public void testRemove() {
+        boolean flag = employeeService.remove(new LambdaQueryWrapper<Employee>()
+                .eq(Employee::getEmployeeId, 207));
+        System.out.println(flag);
     }
 
 }
