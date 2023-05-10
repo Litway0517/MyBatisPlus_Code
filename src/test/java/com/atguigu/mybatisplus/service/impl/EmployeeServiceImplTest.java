@@ -39,10 +39,17 @@ public class EmployeeServiceImplTest {
         employeeService.save(employee);
     }
 
+    /**
+     * 测试根据wrapper条件删除数据
+     */
     @Test
     public void testRemove() {
+        /*
+            SQL -> DELETE FROM `employees` WHERE (employee_id = 207 AND `email` = 'FHIGHA')
+         */
         boolean flag = employeeService.remove(new LambdaQueryWrapper<Employee>()
-                .eq(Employee::getEmployeeId, 207));
+                .eq(Employee::getEmployeeId, 207)
+                .eq(Employee::getEmail, "FHIGHA"));
         System.out.println(flag);
     }
 
