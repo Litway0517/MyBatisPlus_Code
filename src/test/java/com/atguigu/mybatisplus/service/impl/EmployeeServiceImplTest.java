@@ -65,9 +65,13 @@ public class EmployeeServiceImplTest {
         System.out.println(flag);
     }
 
+    /**
+     * 测试根据id查询数据
+     */
     @Test
     public void testGet() {
-        employeeService.getById(206);
+        Employee employee = employeeService.getById(206);
+        System.out.println(employee);
     }
 
 }
