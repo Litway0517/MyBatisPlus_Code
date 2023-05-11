@@ -65,4 +65,9 @@ public class EmployeeServiceImplTest {
         System.out.println(flag);
     }
 
+    @Test
+    public void testGet() {
+        employeeService.getById(206);
+    }
+
 }
