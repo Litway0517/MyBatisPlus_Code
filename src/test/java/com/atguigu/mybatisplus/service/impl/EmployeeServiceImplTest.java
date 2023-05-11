@@ -3,6 +3,8 @@ package com.atguigu.mybatisplus.service.impl;
 import com.atguigu.mybatisplus.pojo.Employee;
 import com.atguigu.mybatisplus.service.EmployeeService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,6 +52,17 @@ public class EmployeeServiceImplTest {
         boolean flag = employeeService.remove(new LambdaQueryWrapper<Employee>()
                 .eq(Employee::getEmployeeId, 207)
                 .eq(Employee::getEmail, "FHIGHA"));
+        System.out.println(flag);
+    }
+
+    /**
+     * 测试根据wrapper条件更新数据
+     */
+    @Test
+    public void testUpdate() {
+        boolean flag = employeeService.update(new LambdaUpdateWrapper<Employee>()
+                .eq(Employee::getEmployeeId, 207)
+                .setSql("manager_id = 206"));
         System.out.println(flag);
     }
 
