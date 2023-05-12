@@ -70,8 +70,12 @@ public class EmployeeServiceImplTest {
      */
     @Test
     public void testGet() {
-        Employee employee = employeeService.getById(206);
-        System.out.println(employee);
+        Employee employeeById = employeeService.getById(206);
+        System.out.println(employeeById);
+
+        Employee employeeByWrapper = employeeService.getOne(new LambdaQueryWrapper<Employee>()
+                .eq(Employee::getEmployeeId, 206));
+        System.out.println(employeeByWrapper);
     }
 
 }
