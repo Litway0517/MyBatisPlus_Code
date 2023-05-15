@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -76,6 +78,22 @@ public class EmployeeServiceImplTest {
         Employee employeeByWrapper = employeeService.getOne(new LambdaQueryWrapper<Employee>()
                 .eq(Employee::getEmployeeId, 206));
         System.out.println(employeeByWrapper);
+    }
+
+    /**
+     * 测试根据wrapper条件查询多条数据
+     */
+    @Test
+    public void testList() {
+        List<Employee> employeeList = employeeService.list();
+        System.out.println(employeeList);
+
+        List<Employee> employeeListByWrapper = employeeService.list(new LambdaQueryWrapper<Employee>()
+                .gt(Employee::getEmployeeId, 196));
+        System.out.println(employeeListByWrapper);
+
+        List<Map<String, Object>> maps = employeeService.listMaps();
+        System.out.println(maps);
     }
 
 }
