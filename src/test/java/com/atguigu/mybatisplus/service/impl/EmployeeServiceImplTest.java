@@ -4,6 +4,7 @@ import com.atguigu.mybatisplus.pojo.Employee;
 import com.atguigu.mybatisplus.service.EmployeeService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -94,6 +95,22 @@ public class EmployeeServiceImplTest {
 
         List<Map<String, Object>> maps = employeeService.listMaps();
         System.out.println(maps);
+    }
+
+    /**
+     * 测试根据wrapper条件分页查询数据
+     */
+    @Test
+    public void testPage() {
+        Page<Employee> page = new Page<>();
+        Page<Employee> employeePage = employeeService.page(page);
+        System.out.println(page);
+
+        Page<Employee> page2 = new Page<>();
+        Page<Employee> employeePageByWrapper = employeeService.page(page2, new LambdaQueryWrapper<Employee>()
+                .gt(Employee::getEmployeeId, 196));
+        System.out.println(employeePageByWrapper);
+
     }
 
 }
