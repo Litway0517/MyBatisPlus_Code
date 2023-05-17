@@ -110,7 +110,18 @@ public class EmployeeServiceImplTest {
         Page<Employee> employeePageByWrapper = employeeService.page(page2, new LambdaQueryWrapper<Employee>()
                 .gt(Employee::getEmployeeId, 196));
         System.out.println(employeePageByWrapper);
+    }
 
+    /**
+     * 测试根据wrapper条件查询总记录数
+     */
+    @Test
+    public void testCount() {
+        long count = employeeService.count();
+        System.out.println(count);
+
+        long countByWrapper = employeeService.count(new LambdaQueryWrapper<Employee>()
+                .gt(Employee::getEmployeeId, 196));
     }
 
 }
