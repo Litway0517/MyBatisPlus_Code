@@ -95,6 +95,10 @@ public class EmployeeServiceImplTest {
 
         List<Map<String, Object>> maps = employeeService.listMaps();
         System.out.println(maps);
+
+        List<Map<String, Object>> mapsByWrapper = employeeService.listMaps(new LambdaQueryWrapper<Employee>()
+                .gt(Employee::getEmployeeId, 196));
+        System.out.println(mapsByWrapper);
     }
 
     /**
@@ -104,7 +108,7 @@ public class EmployeeServiceImplTest {
     public void testPage() {
         Page<Employee> page = new Page<>();
         Page<Employee> employeePage = employeeService.page(page);
-        System.out.println(page);
+        System.out.println(employeePage);
 
         Page<Employee> page2 = new Page<>();
         Page<Employee> employeePageByWrapper = employeeService.page(page2, new LambdaQueryWrapper<Employee>()
@@ -122,6 +126,7 @@ public class EmployeeServiceImplTest {
 
         long countByWrapper = employeeService.count(new LambdaQueryWrapper<Employee>()
                 .gt(Employee::getEmployeeId, 196));
+        System.out.println(countByWrapper);
     }
 
 }
