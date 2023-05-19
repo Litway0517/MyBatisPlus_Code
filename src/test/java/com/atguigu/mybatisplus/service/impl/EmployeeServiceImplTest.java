@@ -121,6 +121,9 @@ public class EmployeeServiceImplTest {
      */
     @Test
     public void testCount() {
+        /*
+            SQL -> SELECT COUNT( * ) FROM `employees`
+         */
         long count = employeeService.count();
         System.out.println(count);
 
