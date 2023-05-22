@@ -52,7 +52,7 @@
         <dependency>
             <groupId>com.github.yulichang</groupId>
             <artifactId>mybatis-plus-join-boot-starter</artifactId>
-            <version>1.4.4</version>
+            <version>1.4.5</version>
         </dependency>
 
         <!-- 用于简化实体类的开发 -->
