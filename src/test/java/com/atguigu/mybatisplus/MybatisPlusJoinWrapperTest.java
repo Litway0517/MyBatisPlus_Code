@@ -30,6 +30,13 @@ public class MybatisPlusJoinWrapperTest {
      */
     @Test
     public void testMPJLambdaWrapperSelectJoinPageOrderBy() {
+        /*
+            SQL -> SELECT COUNT(*) AS total FROM `employees` t
+                   SELECT t.employee_id,t.`first_name`,t.`last_name`,t.`email`,t.`phone_number`,
+                   t.`hire_date`,t.`job_id`,t.`salary`,t.`commission_pct`,t.`manager_id`,t.`department_id`,t1.job_title
+                   FROM `employees` t
+                   LEFT JOIN jobs t1 ON (t1.job_id = t.`job_id`) ORDER BY t.`salary` ASC LIMIT 10
+         */
         Page<EmployeeVo> page = new Page<>();
         Page<EmployeeVo> employeeVoPage = employeeMapper.selectJoinPage(page, EmployeeVo.class, new MPJLambdaWrapper<Employee>()
                 .selectAll(Employee.class)
