@@ -45,6 +45,12 @@ public class MybatisPlusJoinWrapperTest {
      */
     @Test
     public void testMPJLambdaWrapperSelectJoinPage() {
+        /*
+            SQL -> SELECT COUNT(*) AS total FROM `employees` t
+                   SELECT t.employee_id,t.`first_name`,t1.job_title
+                   FROM `employees` t LEFT
+                   JOIN jobs t1 ON (t1.job_id = t.`job_id`) LIMIT 10
+         */
         Page<EmployeeVo> page = new Page<>();
         Page<EmployeeVo> employeeVoPage = employeeMapper.selectJoinPage(page, EmployeeVo.class, new MPJLambdaWrapper<Employee>()
                 .select(Employee::getEmployeeId, Employee::getFirstName)
